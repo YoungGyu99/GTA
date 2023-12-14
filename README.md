@@ -1,1 +1,1 @@
-# GTA
+# GTA(Green Tech Architecture)
