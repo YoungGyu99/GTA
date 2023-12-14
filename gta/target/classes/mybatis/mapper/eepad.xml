@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- ILoginDAO.xml -->
+<mapper namespace="com.spring.gta.eepad.dao.EepadDAO">
+
+	<select id="getEepadList2" parameterType="EepadVO" resultType="EepadVO">
+	  <!--   에너지, 돈, co2  타겟값    -->
+WITH TotalEnergy AS (
+    SELECT
+        NVL(SUM(be_total_energy), 0) AS be_total_energy
+    FROM
+        be_device
+    WHERE
+        b_id = #{bId}
+),
+DistinctMonths AS (
+    SELECT 
+        COUNT(DISTINCT TO_CHAR(be_date, 'YYYYMM')) AS total_months
+    FROM 
+        BE_DEVICE
+)
+SELECT
+    ROUND(te.be_total_energy / dm.total_months, 1) AS average_energy,
+    ROUND((te.be_total_energy / dm.total_months) * 112.94, 1) AS average_money,
+    ROUND((te.be_total_energy / dm.total_months) * 0.9, 1) AS average_co2
+    
+FROM
+    TotalEnergy te
+CROSS JOIN
+    DistinctMonths dm
+ </select>
+ 
+	 <!--   에너지, 돈, co2  현재값    -->
+	<select id="getUseEepadList2" parameterType="EepadVO" resultType="EepadVO">
+	SELECT 
+		 NVL(ROUND(SUM(be_total_energy), 1), 0) AS energy,
+		 NVL(ROUND(SUM(be_total_energy * 112.94), 1), 0) AS money,
+		 NVL(ROUND(SUM(be_total_energy * 0.9), 1), 0) AS co2
+	 FROM be_device
+	 WHERE b_id = #{bId}
+		 AND TO_CHAR(be_date, 'YYYYMM') = TO_CHAR(SYSDATE, 'YYYYMM')
+
+ 
+ 
+  </select>
+</mapper>
+	
+	

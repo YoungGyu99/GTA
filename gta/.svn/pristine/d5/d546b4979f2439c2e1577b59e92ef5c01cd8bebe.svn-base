@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.spring.gta.control.dao.IControlDAO">
+    <select id="getControlList" resultType="com.spring.gta.control.vo.ControlVO">
+       SELECT
+            bw_floor,
+            bw_date ASdate,
+            bw_in_degc AS bw_in_degc,
+            bw_out_degc AS bw_out_degc,
+            bw_in_lux AS bw_in_lux,
+            bw_out_sun AS bw_out_sun
+        FROM
+            bw_in_out_realtime
+        WHERE
+            bw_id = #{bwId} AND TO_CHAR(bw_date, 'YY-MM-DD HH24:MI') = TO_CHAR(SYSDATE, 'YY-MM-DD HH24:MI')
+      
+        ORDER BY
+            bw_floor ASC
+    </select>
+</mapper>
