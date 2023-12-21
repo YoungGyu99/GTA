@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- ILoginDAO.xml -->
+<mapper namespace="com.spring.gta.detail.dao.IDetailDAO">
+
+
+	<!-- 버튼 눌렀을때 나오는 값 -->
+<select id="getChartData" resultType="DetailChartVO" parameterType="DetailChartVO">
+    SELECT BE_FLOOR,
+    LABEL,
+    BE_AC_ENERGY,
+    BE_PLUG_ENERGY,
+    BE_LIGHT_ENERGY
+    FROM ${currentDataset}_Dchart_View
+    WHERE BE_FLOOR = #{beFloor}
+   
+</select>
+
+
+</mapper>
+
+
+
