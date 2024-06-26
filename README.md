@@ -1,2 +1,2 @@
-# GTA(Green Tech Architecture)
+# GTA_BEMS(Green Tech Architecture)
 BemsProject
